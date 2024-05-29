@@ -1,7 +1,21 @@
-import { YStack, styled } from 'tamagui'
+import { View, ViewProps, YStack, YStackProps, createStyledContext, styled } from 'tamagui'
 
-export const MyComponent = styled(YStack, {
+type CustomProps = {
+  blue: boolean
+}
+
+const MyComponentContext = createStyledContext<CustomProps>({
+  blue: false,
+})
+
+const BaseMyComponent = View.styleable<YStackProps & CustomProps>((props, ref) => {
+  return <YStack ref={ref} {...props} />
+})
+
+export const MyComponent = styled(BaseMyComponent, {
   name: 'MyComponent',
+  context: MyComponentContext,
+
   backgroundColor: 'red',
 
   variants: {
